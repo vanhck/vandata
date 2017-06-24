@@ -1,5 +1,4 @@
 import javafx.util.Pair;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -12,6 +11,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -27,6 +28,7 @@ public class Ride {
     private double sidewaysAccelerationS;
     private int stops;
     private String name;
+    private Date time;
 
     public Ride(String name, double badBehaviour) {
         this.km = ThreadLocalRandom.current().nextInt(5, 150 + 1);
@@ -40,6 +42,10 @@ public class Ride {
             this.sidewaysAccelerationS += ThreadLocalRandom.current().nextDouble(1.0, 1.0 + 10.0  * km / 100);
         }
         this.stops = ThreadLocalRandom.current().nextInt((int)(2 * km - badBehaviour * km),(int)(2 * km + (badBehaviour + 0.2) * km)); // TODO
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DAY_OF_YEAR, - ThreadLocalRandom.current().nextInt(0, 11));
+        this.time = cal.getTime();
     }
 
     private double nextGaussianMinMax(double min, double max) {
@@ -109,6 +115,10 @@ public class Ride {
             Element drivenKm = doc.createElement("drivenKM");
             general.appendChild(drivenKm);
             drivenKm.setTextContent(String.valueOf(km));
+
+            Element dateTime = doc.createElement("dateTime");
+            general.appendChild(dateTime);
+            dateTime.setTextContent(String.valueOf(time.getTime()));
 
             addKeyValue(rootElement,doc,"fuelConsumption", String.valueOf(fuelConsumption));
             addKeyValue(rootElement,doc,"hardAccelerationCount", String.valueOf(hardAccelerationCount));

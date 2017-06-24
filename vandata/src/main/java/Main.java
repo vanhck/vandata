@@ -30,6 +30,11 @@ public class Main {
             driverMap.put(drivers[driver].name, new Pair<>(oldscore.getKey() + score.getKey(), oldscore.getValue() + score.getValue()));
             ride.writeXML(filePath);
             FileSender.sendFile(filePath);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         for (int i = 0; i < drivers.length; i++) {
             Pair<Double, Integer> score = driverMap.get(drivers[i].name);

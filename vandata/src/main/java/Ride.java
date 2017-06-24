@@ -99,15 +99,15 @@ public class Ride {
             rootElement.appendChild(general);
 
             Element fin = doc.createElement("fin");
-            rootElement.appendChild(fin);
+            general.appendChild(fin);
             fin.setTextContent(name);
 
             Element user = doc.createElement("user");
-            rootElement.appendChild(user);
+            general.appendChild(user);
             user.setTextContent(name);
 
-            Element drivenKm = doc.createElement("drivenKm");
-            rootElement.appendChild(drivenKm);
+            Element drivenKm = doc.createElement("drivenKM");
+            general.appendChild(drivenKm);
             drivenKm.setTextContent(String.valueOf(km));
 
             addKeyValue(rootElement,doc,"fuelConsumption", String.valueOf(fuelConsumption));
